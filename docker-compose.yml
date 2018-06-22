@@ -1,0 +1,32 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7.22
+    ports:
+      - "3316:3316"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    command: mysqld --port 3316
+
+  web:
+    build: .
+    command: bundle exec rails server --port 3100 --binding 0.0.0.0
+    ports:
+      - "3100:3100"
+    links:
+      - db
+    volumes:
+      - .:/assessing-kubernetes
+      - assessing_kubernetes:/bundle
+
+  worker:
+    build: .
+    command: bundle exec rake worker:run
+    links:
+      - db
+    volumes:
+      - .:/assessing-kubernetes
+      - assessing_kubernetes:/bundle
+
+volumes:
+  assessing_kubernetes:
