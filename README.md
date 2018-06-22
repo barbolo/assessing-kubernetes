@@ -1,24 +1,26 @@
-# README
+# Assessing Kubernetes
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a very simple Rails app that runs:
 
-Things you may want to cover:
+1. a web service that responds with the `hostname` where the app is running and
+with the `count` of a MySQL table;
 
-* Ruby version
+2. a rake task (simulating a worker) that add rows to a MySQL table every 1
+second.
 
-* System dependencies
 
-* Configuration
+## Running with Docker Compose
 
-* Database creation
+```shell
+docker-compose run web bundle install
+docker-compose run web bundle exec rake db:create db:migrate
+docker-compose up
+```
 
-* Database initialization
+## Running a development (local) environment with Kubernetes
 
-* How to run the test suite
+> TODO
 
-* Services (job queues, cache servers, search engines, etc.)
+## Deploying a production environment with Kubernetes
 
-* Deployment instructions
-
-* ...
+> TODO
