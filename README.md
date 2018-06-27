@@ -19,7 +19,25 @@ docker-compose up
 
 ## Running a development (local) environment with Kubernetes
 
-> TODO
+1. First Time Setup
+```shell
+./kubernetes/setup.sh
+```
+2. Deploying a New Image (for setting up or any changes)
+  - Remember to change files: kubernetes/deployments -> web.yaml and worker.yaml
+  to match the version
+```shell
+./kubernetes/build.sh <version>
+./kubernetes/deploy.sh
+```
+Check that everything is running:
+  - `kubectl get deployments`
+  - `kubectl get pods`
+  - `kubectl get services`
+  - `kubectl get pvc`
+  - `kubectl get pv`
+  - Access via browser localhost:3100
+
 
 ## Deploying a production environment with Kubernetes
 

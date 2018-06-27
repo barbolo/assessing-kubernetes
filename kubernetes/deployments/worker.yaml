@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: worker
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: worker
+        track: stable
+    spec:
+      containers:
+        - name: worker
+          image: localhost:5000/kube:0.0.1
+          command: ["/bin/sh", "-c"]
+          args:
+            - bundle install;
+              bundle exec rake worker:run
+          volumeMounts:
+          - name: bundle-persistent-storage
+            mountPath: /bundle
+      volumes:
+      - name: bundle-persistent-storage
+        persistentVolumeClaim:
+          claimName: bundle-pv-claim

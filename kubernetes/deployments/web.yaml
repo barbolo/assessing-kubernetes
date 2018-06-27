@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: web
+        track: stable
+    spec:
+      containers:
+        - name: web
+          image: localhost:5000/kube:0.0.1
+          # args: ["bundle","exec","rails","server","--port","3100","--binding","0.0.0.0"]
+          command: ["/bin/sh", "-c"]
+          args:
+            - bundle install;
+              bundle exec rails server --port 3100 --binding 0.0.0.0
+          ports:
+            - name: http
+              containerPort: 3100
+          volumeMounts:
+          - name: bundle-persistent-storage
+            mountPath: /bundle
+      volumes:
+      - name: bundle-persistent-storage
+        persistentVolumeClaim:
+          claimName: bundle-pv-claim
