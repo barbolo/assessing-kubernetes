@@ -15,11 +15,11 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password:
-  host: db
   port: 3316
 
 development:
   <<: *default
+  host: db
   database: assessing-kubernetes_development
 
 # Warning: The database defined as "test" will be erased and
@@ -27,6 +27,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
+  host: db
   database: assessing-kubernetes_test
 
 # As with config/secrets.yml, you never want to store sensitive information,
@@ -50,6 +51,7 @@ test:
 #
 production:
   <<: *default
+  host: <%= ENV['ASSESSING-KUBERNETES_DATABASE_HOST'] %>
   database: assessing-kubernetes_production
   username: assessing-kubernetes
   password: <%= ENV['ASSESSING-KUBERNETES_DATABASE_PASSWORD'] %>

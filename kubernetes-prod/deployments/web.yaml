@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: web
+        track: stable
+    spec:
+      containers:
+        - name: web
+          image: gcr.io/assessing--kubernetes/kube:0.0.1
+          args: ["bundle","exec","rails","server","--port","3100","--binding","0.0.0.0"]
+          env:
+            - name: RAILS_ENV
+              value: production
+            - name: ASSESSING-KUBERNETES_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: assessing-kubernetes-secrets
+                  key: db_pass
+            - name: ASSESSING-KUBERNETES_DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: assessing-kubernetes-secrets
+                  key: db_host
+          ports:
+            - name: http
+              containerPort: 3100

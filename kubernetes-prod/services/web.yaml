@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: web
+spec:
+  selector:
+    app: web
+  ports:
+    - protocol: http
+      port: 3100
+      targetPort: 3100
+      nodePort: 31000
+  type: LoadBalancer
