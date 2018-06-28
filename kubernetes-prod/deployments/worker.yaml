@@ -17,6 +17,8 @@ spec:
           env:
             - name: RAILS_ENV
               value: production
+            - name: ASSESSING-KUBERNETES_DATABASE_HOST
+              value: 127.0.0.1
             - name: RAILS_MASTER_KEY
               valueFrom:
                 secretKeyRef:
@@ -27,8 +29,18 @@ spec:
                 secretKeyRef:
                   name: assessing-kubernetes-secrets
                   key: db_pass
-            - name: ASSESSING-KUBERNETES_DATABASE_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: assessing-kubernetes-secrets
-                  key: db_host
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          command: ["/cloud_sql_proxy",
+                    "-instances=assessing--kubernetes:us-central1:kube-mysql=tcp:3306",
+                    "-credential_file=/secrets/cloudsql/credentials.json"]
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+              readOnly: true
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
+        - name: cloudsql
+          emptyDir:
