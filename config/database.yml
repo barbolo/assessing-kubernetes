@@ -53,5 +53,5 @@ production:
   <<: *default
   host: <%= ENV['ASSESSING-KUBERNETES_DATABASE_HOST'] %>
   database: assessing-kubernetes_production
-  username: assessing-kubernetes
+  username: assessing-k8s
   password: <%= ENV['ASSESSING-KUBERNETES_DATABASE_PASSWORD'] %>
