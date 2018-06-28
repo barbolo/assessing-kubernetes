@@ -1,3 +1,3 @@
 FROM kube
 
-CMD bundle install
+RUN bundle install RAILS_ENV=production

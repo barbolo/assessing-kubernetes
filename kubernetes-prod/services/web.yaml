@@ -6,7 +6,7 @@ spec:
   selector:
     app: web
   ports:
-    - protocol: http
+    - protocol: TCP
       port: 3100
       targetPort: 3100
       nodePort: 31000

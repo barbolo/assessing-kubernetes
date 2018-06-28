@@ -17,6 +17,11 @@ spec:
           env:
             - name: RAILS_ENV
               value: production
+            - name: RAILS_MASTER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: assessing-kubernetes-secrets
+                  key: rails_master_key
             - name: ASSESSING-KUBERNETES_DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
