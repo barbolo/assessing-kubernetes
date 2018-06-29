@@ -71,4 +71,45 @@ Check that everything is running:
   - In the yamls, under the tag 'images' set the `<version>` accordingly
 
 6. Deploy
-  - sh <PROJECT_DIR>/kubernetes-prod/deploy.sh
+  - `sh <PROJECT_DIR>/kubernetes-prod/deploy.sh`
+
+## USEFULL commands, and other
+### Use the Dashboard
+- Run `sh <PROJECT_DIR>/kubernetes-prod/dashboard/dashboard.sh`
+- Copy the token from output
+- Access localhost:8001 (if using cloudshell click preview web)
+- Change last path to `ui`
+- Paste token
+
+### Rollout updates
+- Repeat steps 4-6 with new version
+
+### Rollback
+- Rollback to last previous:
+  - `kubectl rollout undo deployment/nginx-deployment`
+- Check rollout history:
+  - `kubectl rollout history deployment/nginx-deployment`
+- Rollback to specific revision:
+  - `kubectl rollout undo deployment/nginx-deployment --to-revision=<n>`
+
+### Scale
+- Manual
+  - `kubectl scale deployment nginx-deployment --replicas=10`
+- Auto (based on cpu_usage)
+  - Enable `resource metrics API`
+  - `kubectl autoscale deployment <deployment_name> --cpu-percent=50 --min=1 --max=10`
+- Create and stop load (to test)
+  - `kubectl run -i --tty load-generator --image=busybox /bin/sh`
+  - New prompt opens, run: `while true; do wget -q -O- <service>; done`
+  - Check increase in number of pods in different terminal
+  - Stop: `CTRL+C` or `exit` in the busybox terminal
+
+### Pause and resume deployment
+- Pause:
+  - `kubectl rollout pause deployment <deployment_name>`
+- Resume:
+  - `kubectl rollout resume deployment <deployment_name>`
+
+### Change or set Resources
+- CPU and memory limits
+  - `kubectl set resources deployment <deployment_name> --limits=cpu=200m,memory=512Mi`
