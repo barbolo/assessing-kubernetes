@@ -41,4 +41,34 @@ Check that everything is running:
 
 ## Deploying a production environment with Kubernetes
 
-> TODO
+1. Create a CLOUDSQL instance and access
+  - Create MYSQL - GEN 2 instance with desired attributes
+
+  - Create a service account
+    - Role: CloudSQL Client
+    - Give it a name and id
+    - Check `Furnish a new private key`
+    - `Create`
+    - Save the file (`<proxy_key_file>`)
+
+  - Create DB user that uses cloudproxy (can also be done via console)
+    - `gcloud sql users create assessing-k8s cloudsqlproxy~% --instance=<nome_da_instancia_sql> --password=<sql_pass>`
+
+2. Create cluster via kubernetes engine console (easier to choose options)
+  - Get cluster credentials
+    - `gcloud container clusters get-credentials assessing-kube-cluster`
+  - Set cluster as context for kubectl
+    - `kubectl config set-context gce`
+
+3. Create kubernetes secrets (used by pods, like password and credentials)
+  - `kubectl create secret generic cloudsql-instance-credentials --from-file=credentials.json=<proxy_key_file>`
+  - `kubectl create secret generic assessing-kubernetes-secrets --from-literal=db_pass='<pass-sql> --from-literal=rails_master_key=<key>`
+
+4. Build images
+  - `sh <PROJECT_DIR>/kubernetes-prod/build.sh <version>`
+
+5. Update deployments yamls
+  - In the yamls, under the tag 'images' set the `<version>` accordingly
+
+6. Deploy
+  - sh <PROJECT_DIR>/kubernetes-prod/deploy.sh

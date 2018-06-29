@@ -18,7 +18,7 @@ spec:
             - name: RAILS_ENV
               value: production
             - name: ASSESSING-KUBERNETES_DATABASE_HOST
-              value: 127.0.0.1
+              value: 127.0.0.1 # Local, because using cloudproxy
             - name: RAILS_MASTER_KEY
               valueFrom:
                 secretKeyRef:
