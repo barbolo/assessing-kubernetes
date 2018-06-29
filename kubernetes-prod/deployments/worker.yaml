@@ -13,7 +13,7 @@ spec:
       containers:
         - name: worker
           image: gcr.io/assessing--kubernetes/kube:0.0.1
-          args: ["bundle","exec","rails","server","--port","3100","--binding","0.0.0.0"]
+          args: ["bundle","exec","rake","worker:run"]
           env:
             - name: RAILS_ENV
               value: production
@@ -42,5 +42,3 @@ spec:
         - name: cloudsql-instance-credentials
           secret:
             secretName: cloudsql-instance-credentials
-        - name: cloudsql
-          emptyDir:

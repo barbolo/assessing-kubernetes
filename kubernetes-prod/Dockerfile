@@ -1,3 +1,3 @@
 FROM kube
 
-RUN bundle install RAILS_ENV=production
+RUN bundle install --without development test
