@@ -86,15 +86,15 @@ Check that everything is running:
 
 ### Rollback
 - Rollback to last previous:
-  - `kubectl rollout undo deployment/nginx-deployment`
+  - `kubectl rollout undo deployment <deployment_name>`
 - Check rollout history:
-  - `kubectl rollout history deployment/nginx-deployment`
+  - `kubectl rollout history deployment <deployment_name>`
 - Rollback to specific revision:
-  - `kubectl rollout undo deployment/nginx-deployment --to-revision=<n>`
+  - `kubectl rollout undo deployment <deployment_name> --to-revision=<n>`
 
 ### Scale
 - Manual
-  - `kubectl scale deployment nginx-deployment --replicas=10`
+  - `kubectl scale deployment <deployment_name> --replicas=10`
 - Auto (based on cpu_usage)
   - Enable `resource metrics API`
   - `kubectl autoscale deployment <deployment_name> --cpu-percent=50 --min=1 --max=10`
