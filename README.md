@@ -113,3 +113,7 @@ Check that everything is running:
 ### Change or set Resources
 - CPU and memory limits
   - `kubectl set resources deployment <deployment_name> --limits=cpu=200m,memory=512Mi`
+
+### For More
+- Refer to https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+  or even https://kubernetes.io/docs
