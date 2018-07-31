@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: web
+  namespace: ingress-nginx
 spec:
   selector:
     app: web
