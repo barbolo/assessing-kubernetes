@@ -1,12 +1,12 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: web
+  name: default-http-backend
 spec:
   selector:
-    app: web
+    app: default-http-backend
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 3100
+      targetPort: 8080
   type: NodePort
