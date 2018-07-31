@@ -70,8 +70,11 @@ Check that everything is running:
 5. Update deployments yamls
   - In the yamls, under the tag 'images' set the `<version>` accordingly
 
-6. Deploy
+6. Deploy application-server
   - `sh <PROJECT_DIR>/kubernetes-prod/deploy.sh`
+
+7. Deploy web-server (nginx)
+  - `sh <PROJECT_DIR>/kubernetes-prod/deployments/nginx.sh`
 
 ## USEFULL commands, and other
 ### Use the Dashboard

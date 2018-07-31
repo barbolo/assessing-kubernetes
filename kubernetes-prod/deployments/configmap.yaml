@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: tcp-configmap
-data:
-  80: "default/web:80"
